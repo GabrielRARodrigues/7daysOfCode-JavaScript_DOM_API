@@ -1,0 +1,197 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  font-size: 62.5%;
+  --primary-color: #17162e;
+  --secondary-color: #1d1c3b;
+  --text-color: #acacac;
+  --input-color: #454558;
+  --second-input-color: #8a8a8a;
+  --border-color: #706ea8;
+  --emphasis-color: #ffffff;
+  --text-size: 1.8rem;
+  --title-size: 3.6rem;
+  --font: 'Kumbh Sans', sans-serif;
+}
+
+body {
+  background-color: var(--primary-color);
+  height: 100vh;
+}
+
+body * {
+  font-size: var(--text-size);
+  font-family: var(--font);
+  color: var(--text-color);
+}
+
+header {
+  padding: 6.4rem;
+  text-align: center;
+}
+
+.title {
+  font-size: var(--title-size);
+  color: var(--emphasis-color);
+  font-weight: 600;
+  line-height: 4.5rem;
+
+  margin-bottom: 4.8rem;
+}
+.search-movie {
+  background-color: var(--input-color);
+  background-image: url('./images/search-icon.svg');
+  background-repeat: no-repeat;
+  background-position: right 38px top 50%;
+
+  border: none;
+  border-radius: 8px;
+
+  padding: 2.6rem 2.4rem;
+
+  width: min(63.5rem, 90%);
+
+  color: var(--emphasis-color);
+  font-weight: 500;
+  line-height: 2.2rem;
+
+  margin-bottom: 3rem;
+}
+
+.checkbox-wrapper {
+  display: flex;
+  justify-content: center;
+  gap: 1.2rem;
+}
+
+.checkbox__label {
+  font-weight: 600;
+  color: var(--emphasis-color);
+  line-height: 2.232rem;
+}
+
+.checkbox-wrapper {
+  position: relative;
+}
+.checkbox-wrapper label {
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+  margin: 0;
+}
+
+.checkbox-wrapper input {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 1.6rem;
+  height: 1.6rem;
+  opacity: 0;
+}
+
+.checkbox-wrapper label::before {
+  content: '';
+  display: block;
+  width: 1.6rem;
+  height: 1.6rem;
+  border: 2px solid var(--border-color);
+  border-radius: 4px;
+}
+.checkbox-wrapper input:checked + label::before {
+  background-color: #706ea8;
+  background-image: url("data:image/svg+xml,%3Csvg width='11' height='8' viewBox='0 0 11 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M10 1L3.8125 7.1875L1 4.375' stroke='white' stroke-width='1.125' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E%0A");
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.checkbox-wrapper input:focus + label::before {
+  outline: 2px solid black;
+}
+
+.movies {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4.8rem;
+}
+
+.movie {
+  width: min(122rem, 90%);
+  padding: 4.2rem 3.8rem 3.2rem 4.6rem;
+
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  grid-template-rows: 1fr;
+
+  background-color: var(--secondary-color);
+
+  border-radius: 8px;
+
+  align-items: center;
+
+  box-shadow: 32.8387px 24.5482px 79px rgba(0, 0, 0, 0.15),
+    23.8851px 17.855px 53.2479px rgba(0, 0, 0, 0.121406),
+    16.6246px 12.4276px 34.4391px rgba(0, 0, 0, 0.10125),
+    10.9035px 8.15079px 21.3701px rgba(0, 0, 0, 0.0867188),
+    6.56775px 4.90965px 12.8375px rgba(0, 0, 0, 0.075),
+    3.46346px 2.58907px 7.6377px rgba(0, 0, 0, 0.0632813),
+    1.4367px 1.07399px 4.56719px rgba(0, 0, 0, 0.04875),
+    0.333519px 0.249318px 2.42246px rgba(0, 0, 0, 0.0285938);
+}
+
+.movie__image {
+  width: 139px;
+  height: 139px;
+  margin-right: 6.4rem;
+  border-radius: 50%;
+}
+
+.movie__header {
+  display: flex;
+  flex-direction: column;
+  gap: 2.4rem;
+}
+
+.movie__title {
+  color: var(--emphasis-color);
+  font-weight: 500;
+  line-height: 2.2rem;
+}
+
+.movie-header__status {
+  display: flex;
+  gap: 4.5rem;
+}
+
+.movie-header-status__state {
+  color: var(--emphasis-color);
+  font-weight: 400;
+  line-height: 2.2rem;
+  padding-left: 3.2rem;
+}
+
+.movie-header-status__state--rating {
+  background-image: url('images/star.svg');
+  background-repeat: no-repeat;
+}
+
+.movie-header-status__state--favorite {
+  background-color: transparent;
+  border: none;
+  background-image: url('images/empty-hearth.svg');
+  background-repeat: no-repeat;
+  cursor: pointer;
+}
+
+.movie__synopsis {
+  max-width: 60rem;
+}
+
+.movie-synopsis__text {
+  line-height: 3.2rem;
+  font-weight: 500;
+}
