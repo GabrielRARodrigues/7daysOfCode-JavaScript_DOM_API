@@ -1,18 +1,19 @@
 import APIKey from './js/ApiKey.js'
-
+import { searchMovieFromMoviesAPI } from './js/searchMovie.js'
 const movieElementContainer = document.querySelector('.movies')
-;(async function getPopularMoviesFromMoviesAPI() {
+const searchMovieElement = document.querySelector('[data-search-movie]')
+
+async function getPopularMoviesFromMoviesAPI() {
   const urlAPI = `https://api.themoviedb.org/3/movie/popular?api_key=${APIKey}`
   const requestResponse = await fetch(urlAPI)
   const JSONResponse = await requestResponse.json()
   const movies = JSONResponse.results
-  console.log(movies)
   movies.forEach(movie => {
-    createMovieHTMLElement(movie) 
+    createMovieHTMLElement(movie)
   })
-})()
+}
 
-function createMovieHTMLElement({
+export function createMovieHTMLElement({
   title,
   poster_path,
   vote_average,
@@ -33,7 +34,7 @@ function createMovieHTMLElement({
     <div class="movie-header__status">
       <span
         class="movie-header-status__state movie-header-status__state--rating"
-        >${vote_average}</span
+        >${vote_average.toFixed(1)}</span
       >
       <button
         class="movie-header-status__state movie-header-status__state--favorite"
@@ -47,3 +48,16 @@ function createMovieHTMLElement({
   </div>
 </div>`
 }
+
+document.addEventListener('keydown', async function (e) {
+  const movieName = searchMovieElement.value
+  if (e.key === 'Enter' && movieName.length > 0) {
+    movieElementContainer.innerHTML = ''
+    const movies = await searchMovieFromMoviesAPI(movieName)
+    movies.forEach(movie => {
+      createMovieHTMLElement(movie)
+    })
+  }
+})
+
+getPopularMoviesFromMoviesAPI()
