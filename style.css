@@ -179,12 +179,16 @@ header {
   background-repeat: no-repeat;
 }
 
-.movie-header-status__state--favorite {
+.movie-header-status__state--unfavorite {
   background-color: transparent;
   border: none;
   background-image: url('images/empty-hearth.svg');
   background-repeat: no-repeat;
   cursor: pointer;
+}
+
+.movie-header-status__state--favorite {
+  background-image: url('images/fill-hearth.svg');
 }
 
 .movie__synopsis {
