@@ -2,9 +2,10 @@ import APIKey from './js/ApiKey.js'
 import { searchMovieFromMoviesAPI } from './js/searchMovie.js'
 let movies
 let favoriteButtons
+const checkboxShowFavoriteMovies = document.querySelector('#showFavoriteMovies')
+checkboxShowFavoriteMovies.addEventListener('click', showFavoritedMovies)
 const favoritedMovies =
   JSON.parse(localStorage.getItem('favoritedMovies')) || []
-
 const movieElementContainer = document.querySelector('.movies')
 const searchMovieElement = document.querySelector('[data-search-movie]')
 
@@ -13,8 +14,21 @@ async function getPopularMoviesFromMoviesAPI() {
   const requestResponse = await fetch(urlAPI)
   const JSONResponse = await requestResponse.json()
   movies = JSONResponse.results
+
+  if (favoritedMovies.length > 0) {
+    for (const movie of movies) {
+      favoritedMovies.forEach(favoritedMovie => {
+        let moviesIsEqual = movie.title === favoritedMovie.title
+        if (moviesIsEqual) {
+          movies[movies.indexOf(movie)] = favoritedMovie
+        } else {
+          movie.isFavorite = false
+        }
+      })
+    }
+  }
+
   movies.forEach(movie => {
-    movie.isFavorite = false
     createMovieHTMLElement(movie)
     favoriteButtons = movieElementContainer.querySelectorAll(
       '[data-movie-favorite]'
@@ -50,7 +64,7 @@ export function createMovieHTMLElement({
       <button
         data-movie-favorite
         class="movie-header-status__state movie-header-status__state--unfavorite ${
-          isFavorite ? '.movie-header-status__state--favorite' : ''
+          isFavorite ? 'movie-header-status__state--favorite' : ''
         }"
       >
         Favoritar
@@ -84,11 +98,32 @@ function addFavoriteButtonFunction(buttons) {
         localStorage.setItem('favoritedMovies', JSON.stringify(favoritedMovies))
       } else {
         favoritedMovie.isFavorite = false
-        favoritedMovies.splice(movieIndex, 1)
+        favoritedMovies.splice(
+          favoritedMovies.findIndex(movie => movie.title === movieTitle),
+          1
+        )
         localStorage.setItem('favoritedMovies', JSON.stringify(favoritedMovies))
       }
     })
   )
+}
+
+function showFavoritedMovies(event) {
+  console.log(event)
+  if (event.target.checked) {
+    movieElementContainer.innerHTML = ''
+    for (const movie of favoritedMovies) {
+      console.log(movie.isFavorite)
+      createMovieHTMLElement(movie)
+      favoriteButtons = movieElementContainer.querySelectorAll(
+        '[data-movie-favorite]'
+      )
+      addFavoriteButtonFunction(favoriteButtons)
+    }
+  } else {
+    movieElementContainer.innerHTML = ''
+    getPopularMoviesFromMoviesAPI()
+  }
 }
 
 document.addEventListener('keydown', async function (e) {
